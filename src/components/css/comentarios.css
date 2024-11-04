@@ -1,0 +1,110 @@
+.comentarios-container {
+  background-color: #f5f5f5; /* Color de fondo para la sección de comentarios */
+  padding: 40px 20px; /* Espaciado alrededor de la sección */
+  margin-top: 80px; /* Separación con la sección anterior */
+  padding:  27px;
+}
+
+.comentarios-container h2 {
+  text-align: center; /* Centrar el título */
+  margin-bottom: 20px; /* Margen inferior para separar del contenido */
+  font-size: 2em; /* Tamaño de fuente del título */
+  color: #000000; /* Color del título */
+}
+
+.comentario {
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.comentario p {
+  font-size: 17px;
+  margin-bottom: 10px;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+}
+
+.profile-pic {
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  margin-right: 7px;
+  object-fit: cover; /* Asegura que la imagen mantenga sus proporciones y se ajuste bien */
+  image-rendering: auto; /* Ajusta la calidad de la imagen */
+}
+
+.autor-container {
+  display: flex;
+  align-items: center;
+}
+
+.autor {
+  font-weight: bold;
+  font-size: 17px;
+}
+
+.estrellas {
+  margin-left: 150px;
+  color: gold;
+  font-size: 16px;
+}
+
+/* Media Queries para responsividad */
+@media (max-width: 768px) {
+  .slick-slide {
+    padding: 5px;
+  }
+
+  .comentario {
+    padding: 15px;
+  }
+
+  .comentario p {
+    font-size: 14px;
+  }
+
+  .profile-pic {
+    width: 40px;
+    height: 40px;
+  }
+
+  .autor {
+    font-size: 14px;
+  }
+
+  .estrellas {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slick-slide {
+    padding: 5px;
+  }
+
+  .comentario {
+    padding: 10px;
+  }
+
+  .comentario p {
+    font-size: 12px;
+  }
+
+  .profile-pic {
+    width: 30px;
+    height: 30px;
+  }
+
+  .autor {
+    font-size: 12px;
+  }
+
+  .estrellas {
+    font-size: 12px;
+  }
+}

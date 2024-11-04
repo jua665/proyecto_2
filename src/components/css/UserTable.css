@@ -1,0 +1,62 @@
+/* Estilos para el contenedor de la tabla */
+.table-container {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el título de la tabla */
+.table-title {
+  font-size: 2em;
+  margin-bottom: 20px;
+  color: #000000;
+}
+
+/* Estilos para la tabla */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 35px 0;
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Estilos para las celdas */
+.styled-table th, .styled-table td {
+  padding: 12px 20px;
+  text-align: left; /* Alinea el texto a la izquierda */
+}
+
+/* Estilos para la fila del encabezado */
+.styled-table thead tr {
+  background-color: #ff6600e4;
+  color: #ffffff;
+  text-align: left;
+  font-weight: bold;
+}
+
+/* Estilos para las filas del cuerpo */
+.styled-table tbody tr {
+  border-bottom: 2px solid #dddddd;
+}
+
+/* Estilos para las filas impares */
+.styled-table tbody tr:nth-of-type(even) {
+  background-color: #f3f3f3;
+}
+
+/* Estilos para la última fila */
+.styled-table tbody tr:last-of-type {
+  border-bottom: 2px solid #ff6600;
+}
+
+/* Estilos para el hover en las filas */
+.styled-table tbody tr:hover {
+  background-color: #ff660081;
+  cursor: pointer;
+}
+  

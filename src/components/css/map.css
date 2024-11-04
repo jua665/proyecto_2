@@ -1,0 +1,29 @@
+.button-container {
+    position: absolute;
+    margin-top: 80px;
+    left: 50%;
+    transform: translateX(-50%); /* Centrar horizontalmente */
+    
+  }
+  
+  .reset-button {
+    background-color: #000000; /* Color de fondo verde */
+    color: white; /* Color del texto blanco */
+    border: none; /* Sin borde */
+    padding: 15px 20px; /* Espaciado interno */
+    text-align: center; /* Centrar texto */
+    text-decoration: none; /* Sin subrayado */
+    display: inline-block; /* Que se comporte como un bloque en línea */
+    font-size: 16px; /* Tamaño de fuente */
+    margin: 4px 2px; /* Margen alrededor del botón */
+    cursor: pointer; /* Cambia el cursor al pasar por encima */
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para un efecto 3D */
+    transition: background-color 0.3s, transform 0.3s; /* Transiciones suaves */
+  }
+  
+  .reset-button:hover {
+    background-color: #ff6600e4; /* Color de fondo más oscuro al pasar el mouse */
+    transform: scale(1.05); /* Escalar ligeramente el botón al pasar el mouse */
+  }
+  
