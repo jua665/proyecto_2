@@ -1,4 +1,6 @@
 import React from 'react';
+import { useUser } from '../userContext';
+
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts';
@@ -12,13 +14,15 @@ const data = [
   { name: 'Sábado', distancia: 30 },
   { name: 'Domingo', distancia: 35 },
 ];
-
+ 
 
 
 const CyclingStats = () => {
+  const { user } = useUser();
+
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Estadísticas de Ciclismo</h2>
+      <h2 style={styles.title}>Estadísticas de Ciclismo {user.nombre}</h2>
 
       <ResponsiveContainer width="100%" height={400}>
         <LineChart
