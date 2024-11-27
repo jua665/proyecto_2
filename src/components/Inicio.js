@@ -268,9 +268,9 @@ const Inicio = () => {
 
       <BenefitsSection />
       <CarouselComponent />
-     
+      <CyclingStats/>
+    
       <Comentarios />
-      <GoogleMap />
       <br/>
       <br/>
       {user?.role === 'admin' && <UserTable/>}

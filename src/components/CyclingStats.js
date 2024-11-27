@@ -1,59 +1,79 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import { useUser } from '../userContext';
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-} from 'recharts';
-
-const data = [
-  { name: 'Lunes', distancia: 5 },
-  { name: 'Martes', distancia: 10 },
-  { name: 'Miércoles', distancia: 15 },
-  { name: 'Jueves', distancia: 20 },
-  { name: 'Viernes', distancia: 20 },
-  { name: 'Sábado', distancia: 30 },
-  { name: 'Domingo', distancia: 35 },
-];
-
-
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
 const CyclingStats = () => {
-  return (
-    <div style={styles.container}>
-      <h2 style={styles.title}>Estadísticas de Ciclismo</h2>
+  const { user } = useUser();
+console.log("id",user?._id)
+  const [users, setUsers] = useState([]);
+  const [chartData, setChartData] = useState([]);
 
+  useEffect(() => {
+    // Obtén los usuarios desde la API
+    fetch(`http://localhost:5000/api/users/${user?._id}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setUsers(data);
+
+        // Procesa los datos para la gráfica
+        const cascoCounts = data.reduce((acc, user) => {
+          const cascoId = user.casco_id || "Sin Casco";
+          acc[cascoId] = (acc[cascoId] || 0) + 1;
+          return acc;
+        }, {});
+
+        const formattedData = Object.entries(cascoCounts).map(
+          ([cascoId, count]) => ({
+            cascoId,
+            count,
+          })
+        );
+
+        setChartData(formattedData);
+      })
+      .catch((error) => console.error("Error al obtener usuarios:", error));
+  }, []);
+
+  return (
+    <div
+      style={{
+        padding: "20px",
+        backgroundColor: "#f9f9f9",
+        borderRadius: "10px",
+        width: "80%",
+        margin: "0 auto",
+      }}
+    >
+      <h2 style={{ textAlign: "center" }}>Usuarios por Casco</h2>
       <ResponsiveContainer width="100%" height={400}>
-        <LineChart
-          data={data}
+        <BarChart
+          data={chartData}
           margin={{
-            top: 20, right: 30, left: 20, bottom: 5,
+            top: 20,
+            right: 20,
+            left: 20,
+            bottom: 20,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
+          <XAxis dataKey="cascoId" label={{ value: "Casco ID", position: "insideBottom", dy: 10 }} />
+          <YAxis label={{ value: "Cantidad de Usuarios", angle: -90, position: "insideLeft" }} />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="distancia" stroke="#8884d8" activeDot={{ r: 8 }} />
-        </LineChart>
+          <Bar dataKey="count" fill="#8884d8" name="Usuarios" />
+        </BarChart>
       </ResponsiveContainer>
-
     </div>
   );
-};
-
-const styles = {
-  container: {
-    padding: '20px',
-    backgroundColor: '#f7f7f7',
-    borderRadius: '10px',
-    boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
-    width: '80%',
-    margin: '0 auto',
-    marginTop: '20px',
-  },
-  title: {
-    textAlign: 'center',
-    marginBottom: '20px',
-  },
 };
 
 export default CyclingStats;
