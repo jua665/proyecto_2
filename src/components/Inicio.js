@@ -260,19 +260,20 @@ const Inicio = () => {
   {user?.role === 'admin' && <HeroImage src={HeroImageSrc} alt="Hero Image" />}
   
   {/* Solo renderizar si el rol NO es "admin" */}
-  {user?.role !== 'admin' && <CyclingStats />}
+
   
   <br></br>
   <br></br>
 </MainContainer>
 
+      
       <BenefitsSection />
       <CarouselComponent />
      
       <Comentarios />
-      <GoogleMap />
       <br/>
       <br/>
+      {user?.role === 'admin' &&  <CyclingStats/>}
       {user?.role === 'admin' && <UserTable/>}
       <Footer />
     </>
