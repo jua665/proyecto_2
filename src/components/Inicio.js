@@ -269,7 +269,8 @@ const Inicio = () => {
       
       <BenefitsSection />
       <CarouselComponent />
-     
+      <CyclingStats/>
+    
       <Comentarios />
       <br/>
       <br/>
