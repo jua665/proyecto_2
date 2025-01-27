@@ -5,54 +5,55 @@ import styled from 'styled-components';
 
 // Estilos con styled-components
 const CarouselContainer = styled.div`
-  max-width: 1250px; /* Ajusta el tamaño según lo necesario */
-  margin: 40px auto; /* Centra el carrusel horizontalmente y agrega margen superior e inferior */
+  max-width: 1100px; /* Ajusta el tamaño según lo necesario */
+  margin: 20px auto; /* Centra el carrusel horizontalmente y agrega margen */
   border-radius: 15px; /* Bordes redondeados */
   overflow: hidden; /* Asegura que las imágenes no se salgan de los bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agrega una sombra para un mejor efecto visual */
+  
 
   .carousel-item img {
     width: 100%; /* Asegura que las imágenes ocupen todo el ancho del contenedor */
-    max-height: auto; /* Limita la altura máxima de las imágenes */
+    max-height: 560px; /* Limita la altura máxima de las imágenes */
     object-fit: cover; /* Ajusta las imágenes dentro del contenedor sin distorsión */
     border-radius: 15px; /* Bordes redondeados para las imágenes */
   }
 
   .carousel-caption {
-    background: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente para mejor legibilidad */
-    border-radius: 10px; /* Bordes redondeados para las captions */
-    padding: 10px; /* Espacio alrededor del texto */
+    background: rgba(0, 0, 0, 0.79); /* Fondo semi-transparente */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 10px; /* Espaciado interno */
   }
 `;
 
 const TitleContainer = styled.div`
   text-align: center;
-  margin: 40px auto;
+  margin: 20px auto;
 `;
 
 const Title = styled.h2`
-  font-size: 2em;
+  font-size: 1.8em;
   color: #333;
   margin-bottom: 10px;
 `;
 
 const Subtitle = styled.h4`
-  font-size: 1.2em;
+  font-size: 1em;
   color: #666;
+`;
+
+const MainContainer = styled.div`
+  background-color:  #f5f5f5;
 `;
 
 const CarouselComponent = () => {
   return (
-    <div>
-     
+      <MainContainer>
       <CarouselContainer id="carousel">
-        <br></br>
-        <br></br>
-      <TitleContainer>
-        <Title>Funciones del Sistema</Title>
-        <Subtitle>A pesar de la similitud de los componentes con algunos otros cascos inteligentes,</Subtitle>
-        <Subtitle>el principal diferenciador de Safe Helmet es el diseño aerodinámico del casco y tener su propia aplicación móvil.</Subtitle>
-      </TitleContainer>
+        <TitleContainer  >
+          <Title>Funciones del Sistema</Title>
+          <Subtitle>A pesar de la similitud de los componentes con algunos otros cascos inteligentes,</Subtitle>
+          <Subtitle>el principal diferenciador de Safe Helmet es el diseño aerodinámico del casco y tener su propia aplicación móvil.</Subtitle>
+        </TitleContainer>
         <Carousel>
           <Carousel.Item>
             <img
@@ -89,7 +90,7 @@ const CarouselComponent = () => {
           </Carousel.Item>
         </Carousel>
       </CarouselContainer>
-    </div>
+      </MainContainer>
   );
 }
 

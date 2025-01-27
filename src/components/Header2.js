@@ -1,104 +1,109 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
-import logo from '../imgs/logo.png';
+import logo from '../imgs/safenuevo.png';
 import PayPalButton from './PayPalButton'; // Importa el botón de PayPal
 
 // Estilos
 const HeaderContainer = styled.header`
-  display: flex;
-  align-items: center;
-  padding: 5px 20px;
-  background: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  justify-content: space-between;
+display: flex;
+align-items: center;
+padding: 13px 100px;
+background:rgb(255, 255, 255); /* Cambia este color */
+box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+z-index: 1000;
+justify-content: space-between;
 `;
 
 const Logo = styled.img`
-  height: 60px;
-  width: auto;
+height: 45px;
+width: auto;
 `;
 
 const Nav = styled.nav`
-  display: flex;
-  gap: 30px;
+display: flex;
+gap: 30px;
 
-  @media (max-width: 768px) {
-    display: ${({ open }) => (open ? 'flex' : 'none')};
-    flex-direction: column;
-    position: absolute;
-    top: 70px;
-    left: 0;
-    right: 0;
-    background: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-  }
+@media (max-width: 768px) {
+  display: ${({ open }) => (open ? 'flex' : 'none')};
+  flex-direction: column;
+  position: absolute;
+  top: 70px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  padding: 20px;
+}
 `;
 
 const NavLink = styled(Link)`
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
+text-decoration: none;
+color: #000;
+font-weight: bold;
 
-  &:hover {
-    color: #FF5722;
-  }
+&:hover {
+  color: #FF5722;
+}
 
-  &.active {
-    color: #FF5722;
-  }
+&.active {
+  color: #FF5722;
+}
 `;
 
-const ButtonLink = styled.button`
-  padding: 5px 10px;
-  border-radius: 20px;
-  border: 2px solid #FF5722;
-  background-color: transparent;
-  color: #FF5722 !important;
-  text-transform: none;
-  font-size: 1em;
-  transition: background-color 0.3s ease, color 0.3s ease;
-  text-decoration: none;
+const ButtonLink = styled(Link)`
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 8px 16px; /* Ajusta el relleno para que los botones sean más compactos */
+min-width: 100px; /* Define un ancho mínimo menor */
+max-width: 150px; /* Define un ancho máximo para evitar que crezcan demasiado */
+border-radius: 12px; /* Ajusta las esquinas redondeadas si lo deseas */
+border: 2px solid #fff;
+background-color: #000;
+color: rgb(255, 255, 255) !important;
+text-transform: none;
+font-size: 0.9em; /* Reduce un poco el tamaño del texto */
+transition: background-color 0.3s ease, color 0.3s ease;
+text-decoration: none;
 
-  &:hover {
-    background-color: #FF5722;
-    color: white !important;
-  }
+&:hover {
+  background-color: #FF5722;
+  color: white !important;
+}
 `;
 
 const ButtonContainer = styled.div`
-  display: flex;
-  gap: 15px;
-  margin-left: 20px;
+display: flex;
+gap: 10px; /* Reduce el espacio entre los botones */
+margin-left: 20px;
 
-  @media (max-width: 768px) {
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
-    margin-left: 0;
-  }
+@media (max-width: 768px) {
+  flex-direction: column;
+  gap: 8px; /* Reduce el espacio en pantallas pequeñas */
+  margin-top: 10px;
+  margin-left: 0;
+}
 `;
 
+
 const MenuButton = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  display: none;
+background: none;
+border: none;
+cursor: pointer;
+display: none;
 
-  @media (max-width: 768px) {
-    display: block;
-  }
+@media (max-width: 768px) {
+  display: block;
+}
 
-  svg {
-    width: 30px;
-    height: 30px;
-  }
+svg {
+  width: 30px;
+  height: 30px;
+}
 `;
 
 const Modal = styled.div`
@@ -268,7 +273,7 @@ const Header2 = () => {
         </Nav>
         <ButtonContainer>
           <ButtonLink onClick={handleLogoutClick}>Cerrar sesión</ButtonLink>
-          <ButtonLink onClick={handlePayPalClick}>Donaciones</ButtonLink> {/* Botón para abrir modal de PayPal */}
+          <ButtonLink onClick={handlePayPalClick}>Donaciones</ButtonLink> 
         </ButtonContainer>
       </HeaderContainer>
 

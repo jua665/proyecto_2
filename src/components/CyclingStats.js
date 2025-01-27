@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "../userContext";
-
 import {
-  LineChart,
-  Line,
+  BarChart,
+  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
@@ -14,14 +13,8 @@ import {
 } from "recharts";
 
 const CyclingStats = () => {
-  const { user } = useUser(); // Contexto para obtener el usuario
+  const { user } = useUser();
   const [data, setData] = useState([]);
-  const [filteredData, setFilteredData] = useState([]);
-  const [showAll, setShowAll] = useState(true); // Nuevo estado para mostrar todos los días
-  const [customRange, setCustomRange] = useState({
-    start: "",
-    end: "",
-  });
 
   useEffect(() => {
     if (!user || !user._id) {
@@ -31,17 +24,30 @@ const CyclingStats = () => {
 
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:5000/api/routes/user/${user._id}`
-        );
+        const response = await axios.get(`http://localhost:5000/api/routes/user/${user._id}`);
 
-        const processedData = response.data.map((route) => ({
-          name: new Date(route.createdAt).toLocaleDateString("es-ES"), // Fecha completa como nombre
-          distancia: route.distance,
-          fecha: route.createdAt, // Guardar fecha original para filtros avanzados
-        }));
+        // Filtrar rutas completadas y procesar datos
+        const processedData = response.data
+          .filter((route) => route.status === "Completed") // Solo rutas finalizadas
+          .map((route) => ({
+            day: new Date(route.createdAt).toLocaleDateString("es-ES", {
+              weekday: "long",
+            }), // Día de la semana
+            distancia: route.distance, // Distancia recorrida
+          }));
 
-        setData(processedData);
+        // Agrupar por día y sumar las distancias
+        const groupedData = processedData.reduce((acc, curr) => {
+          const existingDay = acc.find((item) => item.day === curr.day);
+          if (existingDay) {
+            existingDay.distancia += curr.distancia; // Sumar distancias
+          } else {
+            acc.push({ day: curr.day, distancia: curr.distancia });
+          }
+          return acc;
+        }, []);
+
+        setData(groupedData);
       } catch (error) {
         console.error("Error al obtener los datos:", error);
       }
@@ -50,86 +56,13 @@ const CyclingStats = () => {
     fetchData();
   }, [user]);
 
-  useEffect(() => {
-    if (showAll) {
-      setFilteredData(data); // Mostrar todos los datos
-    } else if (customRange.start && customRange.end) {
-      const startDate = new Date(customRange.start);
-      const endDate = new Date(customRange.end);
-
-      // Filtrar datos dentro del rango seleccionado
-      const filtered = data.filter((item) => {
-        const itemDate = new Date(item.fecha);
-        return itemDate >= startDate && itemDate <= endDate;
-      });
-
-      setFilteredData(filtered);
-    }
-  }, [data, showAll, customRange]);
-
-  const handleRangeChange = (e) => {
-    const { name, value } = e.target;
-    setCustomRange((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>
-        Estadísticas de Ciclismo para {user?.nombre}
-      </h2>
+      <h2 style={styles.title}>Rutas Finalizadas por Día de la Semana</h2>
 
-      {/* Controles de Filtros */}
-      <div style={styles.filterContainer}>
-        <label>
-          <input
-            type="radio"
-            name="filterMode"
-            checked={showAll}
-            onChange={() => setShowAll(true)}
-          />
-          Mostrar Todos los Días
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="filterMode"
-            checked={!showAll}
-            onChange={() => setShowAll(false)}
-          />
-          Filtrar por Rango de Fechas
-        </label>
-      </div>
-
-      {!showAll && (
-        <div style={styles.rangeContainer}>
-          <label>
-            Inicio:
-            <input
-              type="date"
-              name="start"
-              value={customRange.start}
-              onChange={handleRangeChange}
-            />
-          </label>
-          <label>
-            Fin:
-            <input
-              type="date"
-              name="end"
-              value={customRange.end}
-              onChange={handleRangeChange}
-            />
-          </label>
-        </div>
-      )}
-
-      {/* Gráfica */}
       <ResponsiveContainer width="100%" height={400}>
-        <LineChart
-          data={filteredData}
+        <BarChart
+          data={data}
           margin={{
             top: 20,
             right: 30,
@@ -138,30 +71,12 @@ const CyclingStats = () => {
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis
-            dataKey="name"
-            label={{
-              value: "Fecha",
-              position: "insideBottomRight",
-              offset: -10,
-            }}
-          />
-          <YAxis
-            label={{
-              value: "Distancia (km)",
-              angle: -90,
-              position: "insideLeft",
-            }}
-          />
+          <XAxis dataKey="day" label={{ value: "Día de la Semana", position: "insideBottomRight", offset: -10 }} />
+          <YAxis label={{ value: "Distancia (km)", angle: -90, position: "insideLeft" }} />
           <Tooltip />
           <Legend />
-          <Line
-            type="monotone"
-            dataKey="distancia"
-            stroke="#8884d8"
-            activeDot={{ r: 8 }}
-          />
-        </LineChart>
+          <Bar dataKey="distancia" fill="#8884d8" name="Distancia Recorrida" />
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );
@@ -179,18 +94,6 @@ const styles = {
   },
   title: {
     textAlign: "center",
-    marginBottom: "20px",
-  },
-  filterContainer: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "10px",
-    marginBottom: "20px",
-  },
-  rangeContainer: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "10px",
     marginBottom: "20px",
   },
 };

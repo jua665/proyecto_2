@@ -1,7 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import logo1 from '../imgs/bici.jpg';
+import logo1 from '../imgs/bicis.png';
 import Header from '../components/Header';
+import Footer from './Footer';
+import Encabezado from './Encabezado';
+import BenefitsSection from './BenefitsSection'
+import ImageCarousel from './ImageCarousel'
+import Comentarios from './Comentarios'
 
 const MainContainer = styled.main`
   display: flex;
@@ -26,7 +31,7 @@ const Title = styled.h1`
 `;
 
 const Highlight = styled.span`
-  color: #FF5722; /* Color naranja */
+  color:rgb(0, 0, 0); /* Color naranja */
 `;
 
 const Description = styled.p`
@@ -42,16 +47,14 @@ const HeroImage = styled.img`
 
 const Main = () => {
   return (
-    <MainContainer id="inicio">
-      <Header  />
-      <Content>
-        <Title>Safe<Highlight>Helmet</Highlight></Title>
-        <Description>
-          Safe Helmet está enfocado para solucionar diversas problemáticas que los ciclistas se enfrentan diariamente. Este producto combina la seguridad con la comodidad y la conectividad para ofrecer una experiencia única con la bicicleta.
-        </Description>
-      </Content>
-      <HeroImage src={logo1} alt="Hero Image" />
-    </MainContainer>
+    <>
+      <Header/>
+      <Encabezado/>
+      <BenefitsSection />
+      <ImageCarousel/>
+      <Comentarios/>
+      <Footer/>
+    </>
   );
 };
 

@@ -14,6 +14,7 @@ import Login from './components/Login';
 import Register from './components/Register';
 import { UserProvider } from './userContext';
 import ProtectedRoute  from './components/ProtectedRoute'
+import Header from './components/Header';
 
 const App = () => {
   return (
@@ -35,11 +36,7 @@ const MainLayout = () => {
       <Routes>
         <Route path="/" element={
           <>
-            <Main />
-            <Info />
-            <Carrusel />
-            <Comments />
-            <Footer/>         
+          <Main/>    
             </>
         } />
        <Route path="/login" element={<Login />} />

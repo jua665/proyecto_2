@@ -5,15 +5,17 @@ import logo1 from '../imgs/codigo.png';
 import bici from '../imgs/casco.png';
 import bici1 from '../imgs/ge.png';
 import bici2 from '../imgs/ciclismo.png';
-import HeroImageSrc from '../imgs/bici.jpg';
+import HeroImageSrc from '../imgs/bicis.png';
 import { Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Comentarios from './Comentarios';
 import Footer from '../components/Footer';
+import Encabezado from '../components/Encabezado'
 import GoogleMap from './GoogleMap';
 import { useUser } from '../userContext';
 import CyclingStats from './CyclingStats'; // Importa el nuevo componente
 import UserTable from './UserTable';
+import ImageCarousel from './ImageCarousel'
 
 const MainContainer = styled.main`
   display: flex;
@@ -114,89 +116,6 @@ const BenefitsSection = () => {
   );
 };
 
-const CarouselContainer = styled.div`
-  max-width: 1250px;
-  margin: 40px auto;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-
-  .carousel-item img {
-    width: 100%;
-    max-height: auto;
-    object-fit: cover;
-    border-radius: 15px;
-  }
-
-  .carousel-caption {
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
-    padding: 10px;
-  }
-`;
-
-const CarouselTitleContainer = styled.div`
-  text-align: center;
-  margin: 40px auto;
-`;
-
-const CarouselTitle = styled.h2`
-  font-size: 2em;
-  color: #333;
-  margin-bottom: 10px;
-`;
-
-const Subtitle = styled.h4`
-  font-size: 1.2em;
-  color: #666;
-`;
-
-const CarouselComponent = () => {
-  return (
-    <CarouselContainer id="carousel">
-      <CarouselTitleContainer>
-        <CarouselTitle>Funciones del Sistema</CarouselTitle>
-        <Subtitle>A pesar de la similitud de los componentes con algunos otros cascos inteligentes,</Subtitle>
-        <Subtitle>el principal diferenciador de Safe Helmet es el diseño aerodinámico del casco y tener su propia aplicación móvil.</Subtitle>
-      </CarouselTitleContainer>
-      <Carousel>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://journey.app/blog/wp-content/uploads/2022/07/casco-para-ciclismo.jpg"
-            alt="First slide"
-          />
-          <Carousel.Caption>
-            <h5>Primera función</h5>
-            <p>Detección y medición de la severidad del impacto para proteger al usuario.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://webrun.com.br/wp-content/uploads/2020/08/dia-do-ciclismo-feed-2381293-1200x800.jpeg"
-            alt="Second slide"
-          />
-          <Carousel.Caption>
-            <h5>Segunda función</h5>
-            <p>Notificaciones en tiempo real con respuesta inmediata a su contacto de emergencia.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://www.entrenamiento.com/wp-content/uploads/2015/03/ciclismo-scaled.jpg"
-            alt="Third slide"
-          />
-          <Carousel.Caption>
-            <h5>Tercera función</h5>
-            <p>Uso de sensores para mejorar significativamente la experiencia del usuario y la seguridad.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
-      </Carousel>
-    </CarouselContainer>
-  );
-};
 
 const ButtonContainer = styled.div`
   border-radius: 20px;
@@ -245,36 +164,14 @@ const Inicio = () => {
   return (
     <>
       <Header2 />
-      <MainContainer id="inicio">
-  <Content>
-    <br></br>
-    <br></br>
-    <MainTitle>Safe<Highlight>Helmet</Highlight></MainTitle>
-    <Description>
-      Safe Helmet está enfocado para solucionar diversas problemáticas que los ciclistas se enfrentan diariamente. Este producto combina la seguridad con la comodidad y la conectividad para ofrecer una experiencia única con la bicicleta.
-    </Description>
-    <ButtonContainer>
-      {user?.role === 'admin' && <BackupButton onClick={handleBackup}>Respaldar</BackupButton>}
-    </ButtonContainer>
-  </Content>
-  {user?.role === 'admin' && <HeroImage src={HeroImageSrc} alt="Hero Image" />}
-  
-  {/* Solo renderizar si el rol NO es "admin" */}
-
-  
-  <br></br>
-  <br></br>
-</MainContainer>
-
-      
+      <Encabezado/>
       <BenefitsSection />
-      <CarouselComponent />
+      <ImageCarousel />
       <CyclingStats/>
-    
       <Comentarios />
       <br/>
       <br/>
-      {user?.role === 'admin' &&  <CyclingStats/>}
+    
       {user?.role === 'admin' && <UserTable/>}
       <Footer />
     </>

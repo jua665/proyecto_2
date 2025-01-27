@@ -29,7 +29,6 @@ const MainLayout = () => {
       <Routes>
         <Route path="/" element={
           <>
-            <Main />
             <Info/>
             <Carrusel/>
             <Comments />

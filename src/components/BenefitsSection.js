@@ -7,7 +7,7 @@ import bici2 from '../imgs/ciclismo.png';
 
 const BenefitsContainer = styled.section`
   padding: 70px 20px;
-  background: #f5f5f5;
+  background:rgb(255, 255, 255);
   text-align: center;
   color: #000;
 `;
