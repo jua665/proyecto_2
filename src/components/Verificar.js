@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik, Form, Field } from 'formik';
 import { useNavigate } from 'react-router-dom';
-import * as yup from 'yup';
+// import * as yup from 'yup';
 import logo from '../imgs/logo.png';
 import '../components/css/style.css';  // Importa el archivo CSS
 

@@ -16,7 +16,7 @@ const recoveryValidationSchema = yup.object().shape({
 const Recuperarcontra = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const navigate = useNavigate();  // Obtener la función de navegación
+  // const navigate = useNavigate();  // Obtener la función de navegación
 
   return (
     <div style={styles.container}>
@@ -118,7 +118,7 @@ const styles = {
       fontSize: '14px',
     },
     button: {
-      padding: '12px 25px',
+      padding: '12px 30px',
       borderRadius: '8px',
       border: 'none',
       backgroundColor: '#E64A19',

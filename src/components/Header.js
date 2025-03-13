@@ -1,7 +1,7 @@
   import React, { useState, useEffect } from 'react';
   import styled from 'styled-components';
   import { Link } from 'react-router-dom';
-  import logo from '../imgs/logo.png';
+  // import logo from '../imgs/logo.png';
   import safehel from '../imgs/safenuevo.png'
 
   const HeaderContainer = styled.header`

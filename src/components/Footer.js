@@ -20,8 +20,8 @@ const Footer = () => {
         <div className="footer-categorias">
           <h3>Categorías</h3>
           <ul>
-            <li>Información</li>
-            <li>Contacto</li>
+          <li><a href="/politica">Política de Privacidad</a></li>
+          <li><a href="/eliminar">Eliminar Cuenta</a></li>
             <li>Descarga</li>
           </ul>
         </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import Main from '../components/Main';
+// import Main from '../components/Main';
 import Comments from '../components/Comentarios';
 import Footer from '../components/Footer';
 import Login from '../components/Login';
@@ -22,7 +22,7 @@ const App = () => {
 
 const MainLayout = () => {
   const location = useLocation();
-  const isAuthRoute = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/recuperar contraseña';
+  // const isAuthRoute = location.pathname === '/login' || location.pathname === '/register' || location.pathname === '/recuperar contraseña';
 
   return (
     <>

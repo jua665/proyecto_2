@@ -5,13 +5,13 @@ import logo1 from '../imgs/codigo.png';
 import bici from '../imgs/casco.png';
 import bici1 from '../imgs/ge.png';
 import bici2 from '../imgs/ciclismo.png';
-import HeroImageSrc from '../imgs/bicis.png';
-import { Carousel } from 'react-bootstrap';
+// import HeroImageSrc from '../imgs/bicis.png';
+// import { Carousel } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Comentarios from './Comentarios';
 import Footer from '../components/Footer';
 import Encabezado from '../components/Encabezado'
-import GoogleMap from './GoogleMap';
+// import GoogleMap from './GoogleMap';
 import { useUser } from '../userContext';
 import CyclingStats from './CyclingStats'; // Importa el nuevo componente
 import UserTable from './UserTable';
@@ -25,7 +25,7 @@ const MainContainer = styled.main`
   padding: 20px;
   background-color: #fff;
   min-height: 600px;
-`;
+`; 
 
 const Content = styled.div`
   max-width: 600px;
