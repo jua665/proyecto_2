@@ -4,6 +4,122 @@ const EliminarCuenta = () => {
   const [mensaje, setMensaje] = useState('');
   const [confirmacion, setConfirmacion] = useState(false);
 
+  const styles = {
+    container: {
+      backgroundColor: '#fff9f1', // fondo naranja muy claro
+      minHeight: '100vh',
+      padding: '32px 16px',
+      fontFamily: 'Arial, sans-serif'
+    },
+    card: {
+      maxWidth: '600px',
+      margin: '0 auto',
+      backgroundColor: 'white',
+      borderRadius: '8px',
+      boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+      overflow: 'hidden'
+    },
+    header: {
+      backgroundColor: '#f97316', // naranja
+      padding: '16px 24px',
+      color: 'white',
+      textAlign: 'center'
+    },
+    title: {
+      fontSize: '24px',
+      fontWeight: 'bold',
+      margin: 0
+    },
+    content: {
+      padding: '24px',
+    },
+    warningBox: {
+      borderLeft: '4px solid #fb923c', // naranja más claro
+      paddingLeft: '16px',
+      paddingTop: '8px',
+      paddingBottom: '8px',
+      marginBottom: '16px'
+    },
+    paragraph: {
+      lineHeight: '1.6',
+      color: '#4b5563',
+      margin: '8px 0'
+    },
+    buttonContainer: {
+      textAlign: 'center',
+      marginTop: '24px'
+    },
+    deleteButton: {
+      padding: '12px 24px',
+      backgroundColor: '#f97316', // naranja
+      color: 'white',
+      border: 'none',
+      borderRadius: '6px',
+      fontWeight: '500',
+      cursor: 'pointer',
+      fontSize: '16px',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+      transition: 'background-color 0.3s'
+    },
+    confirmationBox: {
+      backgroundColor: '#ffedd5', // naranja muy claro
+      border: '1px solid #fed7aa',
+      borderRadius: '6px',
+      padding: '16px',
+      marginTop: '16px'
+    },
+    confirmTitle: {
+      fontSize: '18px',
+      fontWeight: '600',
+      color: '#c2410c', // naranja oscuro
+      marginBottom: '8px'
+    },
+    buttonsGroup: {
+      display: 'flex',
+      justifyContent: 'center',
+      gap: '16px',
+      marginTop: '16px'
+    },
+    confirmButton: {
+      padding: '8px 16px',
+      backgroundColor: '#f97316', // naranja
+      color: 'white',
+      border: 'none',
+      borderRadius: '6px',
+      fontWeight: '500',
+      cursor: 'pointer'
+    },
+    cancelButton: {
+      padding: '8px 16px',
+      backgroundColor: '#e5e7eb', // gris claro
+      color: '#4b5563',
+      border: 'none',
+      borderRadius: '6px',
+      fontWeight: '500',
+      cursor: 'pointer'
+    },
+    successMessage: {
+      backgroundColor: '#d1fae5', // verde claro
+      border: '1px solid #a7f3d0',
+      borderRadius: '6px',
+      padding: '16px',
+      marginTop: '16px',
+      textAlign: 'center',
+      color: '#047857' // verde oscuro
+    },
+    footer: {
+      backgroundColor: '#ffedd5', // naranja muy claro
+      padding: '12px 24px',
+      borderTop: '1px solid #fed7aa', // borde naranja claro
+      textAlign: 'center'
+    },
+    footerText: {
+      fontSize: '14px',
+      color: '#ea580c', // naranja medio
+      margin: 0
+    }
+  };
+
   const handleSolicitudEliminar = () => {
     setConfirmacion(true);
   };
@@ -19,26 +135,26 @@ const EliminarCuenta = () => {
   };
 
   return (
-    <div className="bg-orange-50 min-h-screen py-8">
-      <div className="max-w-lg mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
-        <div className="bg-orange-500 px-6 py-4">
-          <h1 className="text-2xl font-bold text-white text-center">Eliminar Cuenta</h1>
+    <div style={styles.container}>
+      <div style={styles.card}>
+        <div style={styles.header}>
+          <h1 style={styles.title}>Eliminar Cuenta</h1>
         </div>
         
-        <div className="p-6 space-y-4">
-          <div className="border-l-4 border-orange-400 pl-4 py-2">
-            <p className="text-gray-700 leading-relaxed">
+        <div style={styles.content}>
+          <div style={styles.warningBox}>
+            <p style={styles.paragraph}>
               Si deseas eliminar tu cuenta, ten en cuenta que se eliminarán todos tus datos de forma permanente.
               Este proceso no se puede deshacer.
             </p>
           </div>
           
           {!confirmacion && !mensaje && (
-            <div className="text-center mt-6">
-              <p className="mb-4 text-gray-700">Para proceder, haz clic en el botón de abajo.</p>
+            <div style={styles.buttonContainer}>
+              <p style={styles.paragraph}>Para proceder, haz clic en el botón de abajo.</p>
               <button 
                 onClick={handleSolicitudEliminar} 
-                className="px-6 py-3 bg-orange-600 text-white font-medium rounded-lg hover:bg-orange-700 transition-colors duration-300 shadow-md"
+                style={styles.deleteButton}
               >
                 Solicitar Eliminación
               </button>
@@ -46,19 +162,19 @@ const EliminarCuenta = () => {
           )}
           
           {confirmacion && (
-            <div className="bg-orange-100 border border-orange-200 rounded-lg p-4 mt-4">
-              <h3 className="text-lg font-semibold text-orange-800 mb-2">¿Estás seguro?</h3>
-              <p className="text-gray-700 mb-4">Esta acción eliminará permanentemente tu cuenta y todos tus datos asociados.</p>
-              <div className="flex justify-center space-x-4">
+            <div style={styles.confirmationBox}>
+              <h3 style={styles.confirmTitle}>¿Estás seguro?</h3>
+              <p style={styles.paragraph}>Esta acción eliminará permanentemente tu cuenta y todos tus datos asociados.</p>
+              <div style={styles.buttonsGroup}>
                 <button 
                   onClick={handleEliminarCuenta} 
-                  className="px-4 py-2 bg-orange-600 text-white font-medium rounded-lg hover:bg-orange-700 transition-colors duration-300"
+                  style={styles.confirmButton}
                 >
                   Sí, eliminar mi cuenta
                 </button>
                 <button 
                   onClick={handleCancelar} 
-                  className="px-4 py-2 bg-gray-200 text-gray-700 font-medium rounded-lg hover:bg-gray-300 transition-colors duration-300"
+                  style={styles.cancelButton}
                 >
                   Cancelar
                 </button>
@@ -67,14 +183,14 @@ const EliminarCuenta = () => {
           )}
           
           {mensaje && (
-            <div className="bg-green-100 border border-green-200 rounded-lg p-4 mt-4 text-center">
-              <p className="text-green-700">{mensaje}</p>
+            <div style={styles.successMessage}>
+              <p>{mensaje}</p>
             </div>
           )}
         </div>
         
-        <div className="bg-orange-100 px-6 py-3 border-t border-orange-200">
-          <p className="text-sm text-orange-700 text-center">
+        <div style={styles.footer}>
+          <p style={styles.footerText}>
             Si tienes alguna pregunta, contacta con soporte antes de continuar.
           </p>
         </div>
