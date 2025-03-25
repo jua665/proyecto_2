@@ -42,11 +42,10 @@ const Login = () => {
         validationSchema={loginValidationSchema}
         onSubmit={async (values, { setSubmitting, setErrors }) => {
           try {
-            const emailCifrado = caesarCipher(values.email, 3);
-            const contraseñaCifrado = caesarCipher(values.password, 3);
-            const response = await axios.post('https://servertest-tnt7.onrender.com/api/users/login', {
-              email: emailCifrado,
-              password: contraseñaCifrado,
+            
+            const response = await axios.post('https://servertest-tnt7.onrender.com/api/users/login/', {
+              email: values.email,
+              password: values.password,
             });
             const { token, user } = response.data;
             localStorage.setItem('token', token);
