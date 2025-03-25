@@ -39,7 +39,7 @@ const MainLayout = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/recuperar contraseña" element={<Recuperarcontra />} />
         <Route path="/verificar" element={<Verificar />} />
-        <Route path="/reset" element={<Reset />} />
+        <Route path="/resetC" element={<Reset />} />
         <Route path="/principal" element={<Principal />} />
       </Routes>
     </>

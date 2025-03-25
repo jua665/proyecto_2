@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import {  useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
@@ -16,7 +17,7 @@ const recoveryValidationSchema = yup.object().shape({
 const Recuperarcontra = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  // const navigate = useNavigate();  // Obtener la función de navegación
+  const navigate = useNavigate();  // Obtener la función de navegación
 
   return (
     <div style={styles.container}>
@@ -25,11 +26,12 @@ const Recuperarcontra = () => {
         validationSchema={recoveryValidationSchema}
         onSubmit={async(values, { setSubmitting, setErrors }) => {
           try {
-            const response = await axios.post('http://localhost:5000/api/users/request-reset', {
+            const response = await axios.post('https://servertest-tnt7.onrender.com/api/users/request-resetWeb', {
               email: values.email
             });
             setSuccessMessage('Verifica tu correo electrónico para continuar.');
             setErrorMessage('');
+            navigate('/reset');
           } catch (error) {
             setErrorMessage('Hubo un problema con la solicitud. Inténtalo de nuevo.');
             setSuccessMessage('');
