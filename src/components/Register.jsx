@@ -54,7 +54,7 @@ const Register = () => {
           const passwordCifrado = caesarCipher(values.password, 3);
 
           try {
-            const response = await axios.post('http://localhost:5000/api/users/registro', {
+            const response = await axios.post('https://servertest-tnt7.onrender.com/api/users/registro', {
               nombre: values.firstName,
               email: emailCifrado,
               password: passwordCifrado,

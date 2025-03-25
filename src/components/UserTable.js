@@ -8,7 +8,7 @@ const UserTable = () => {
   const usersPerPage = 8; // Número de usuarios por página
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/users')
+    fetch('https://servertest-tnt7.onrender.com/api/users')
       .then(response => response.json())
       .then(data => setUsers(data))
       .catch(error => console.error('Error fetching users:', error));

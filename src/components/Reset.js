@@ -42,7 +42,7 @@ const Reset = () => {
         onSubmit={async (values, { setSubmitting, setErrors }) => {
           try {
             const contraseñaCifrado = caesarCipher(values.password, 3);
-            await axios.post(`http://localhost:5000/api/users/reset-password/${token}`, {
+            await axios.post(`https://servertest-tnt7.onrender.com/api/users/reset-password/${token}`, {
               password: contraseñaCifrado
             });
             alert("¡Contraseña restablecida exitosamente! Redirigiendo al inicio de sesión...");

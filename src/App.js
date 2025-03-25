@@ -40,7 +40,7 @@ const MainLayout = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/recuperar contraseña" element={<Recuperarcontra />} />
         <Route path="/verificar" element={<Verificar />} />
-        <Route path="/reset" element={<Reset />} />
+        <Route path="/reset/:token" element={<Reset />} />
         <Route path="/header2" element={<Header2/>} />
         <Route path="/inicio" element={  <ProtectedRoute><Inicio/></ProtectedRoute>} />
         <Route path="/politica" element={<PoliticaPrivacidad />} />
