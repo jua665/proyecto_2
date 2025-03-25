@@ -46,7 +46,7 @@ const Login = () => {
             const response = await axios.post('https://servertest-tnt7.onrender.com/api/users/login/', {
               email: values.email,
               password: values.password,
-            }, {
+            }, { 
               headers: {
                 'Content-Type': 'application/json'
               }
