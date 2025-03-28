@@ -59,6 +59,10 @@ const Register = () => {
               email: emailCifrado,
               password: passwordCifrado,
               telefono: values.phone,
+            }, { 
+              headers: {
+                'Content-Type': 'application/json'
+              }
             });
 
             console.log('Registro exitoso:', response.data);

@@ -3,10 +3,13 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import axios from 'axios';
 import logo from '../imgs/logo.png';  
-import '../components/css/style.css';  // Importa el archivo CSS
-import { useNavigate, useParams } from "react-router-dom";
+import '../components/css/style.css';  
+import { useNavigate } from "react-router-dom";
 
 const resetPasswordValidationSchema = yup.object().shape({
+  token: yup
+    .string("Ingresa tu token")
+    .required("*Campo Obligatorio"),
   password: yup
     .string("Ingresa tu contraseña")
     .required("*Campo Obligatorio")
@@ -18,37 +21,28 @@ const resetPasswordValidationSchema = yup.object().shape({
     .oneOf([yup.ref('password')], "Las contraseñas deben coincidir"),
 });
 
-//encriptado
-const caesarCipher = (str, shift) => {
-  return str.split('').map(char => {
-    if (char.match(/[a-z]/i)) {
-      const code = char.charCodeAt();
-      let base = code >= 65 && code <= 90 ? 65 : 97;
-      return String.fromCharCode(((code - base + shift) % 26) + base);
-    }
-    return char;
-  }).join('');
-};
-
 const Reset = () => {
   const navigate = useNavigate();
-  const { token } = useParams(); // Obtener el token desde la URL
 
   return (
     <div style={styles.container}>
       <Formik
-        initialValues={{ password: '', confirmPassword: '' }}
+        initialValues={{ token: '', password: '', confirmPassword: '' }}
         validationSchema={resetPasswordValidationSchema}
         onSubmit={async (values, { setSubmitting, setErrors }) => {
           try {
-          
-            await axios.post(`https://servertest-tnt7.onrender.com/api/users/reset-password/${token}`, {
+            await axios.post(`https://servertest-tnt7.onrender.com/api/users/reset-password/${values.token}`, {
+              token: values.token,
               password: values.password
+            }, { 
+              headers: {
+                'Content-Type': 'application/json'
+              }
             });
             alert("¡Contraseña restablecida exitosamente! Redirigiendo al inicio de sesión...");
-            setTimeout(() => navigate('/login'), 2000); // Redirigir después de 2 segundos
+            setTimeout(() => navigate('/login'), 2000);
           } catch (error) {
-            setErrors({ password: 'Error al restablecer la contraseña. Inténtalo de nuevo.' });
+            setErrors({ token: 'Error al restablecer la contraseña. Verifica el token.' });
           }
           setSubmitting(false);
         }}
@@ -57,7 +51,18 @@ const Reset = () => {
           <Form style={styles.form} onSubmit={handleSubmit}>
             <img src={logo} alt="Logo del proyecto" style={styles.logo} />
             <h2 style={styles.title}>Restablecer Contraseña</h2>
-            <p style={styles.label}>Por favor ingrese su nueva contraseña</p>
+            <p style={styles.label}>Ingrese el token de recuperación</p>
+            <div style={styles.label}>
+              <Field
+                type="text"
+                name="token"
+                placeholder="Token"
+                className="input"
+                style={styles.input}
+              />
+              <ErrorMessage name="token" component="div" className="error" />
+            </div>
+            <p style={styles.label}>Ingrese su nueva contraseña</p>
             <div style={styles.label}>
               <Field
                 type="password"
@@ -81,7 +86,7 @@ const Reset = () => {
             <p style={styles.label}>Su contraseña debe contener:</p>
             <ul>
               <li>Al menos 6 caracteres</li>
-              <li>Contiene un número</li>
+              <li>Contener al menos un número</li>
             </ul>
             <button type="submit" style={styles.button}>Continuar</button>
           </Form>
@@ -113,17 +118,13 @@ const styles = {
     maxWidth: '400px',
   },
   logo: {
-    width: '120px', // Ajusta el tamaño del logo según tus necesidades
+    width: '120px',
     marginBottom: '20px',
   },
   title: {
     marginBottom: '20px',
     fontSize: '24px',
     color: '#333',
-  },
-  inputGroup: {
-    marginBottom: '20px',
-    width: '100%',
   },
   label: {
     display: 'block',

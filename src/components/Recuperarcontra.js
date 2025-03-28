@@ -26,7 +26,7 @@ const Recuperarcontra = () => {
         validationSchema={recoveryValidationSchema}
         onSubmit={async(values, { setSubmitting, setErrors }) => {
           try {
-            const response = await axios.post('https://servertest-tnt7.onrender.com/api/users/request-resetWeb', {
+            const response = await axios.post('https://servertest-tnt7.onrender.com/api/users/request-reset', {
               email: values.email
             });
             setSuccessMessage('Verifica tu correo electrónico para continuar.');
