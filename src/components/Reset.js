@@ -41,9 +41,9 @@ const Reset = () => {
         validationSchema={resetPasswordValidationSchema}
         onSubmit={async (values, { setSubmitting, setErrors }) => {
           try {
-            const contraseñaCifrado = caesarCipher(values.password, 3);
+          
             await axios.post(`https://servertest-tnt7.onrender.com/api/users/reset-password/${token}`, {
-              password: contraseñaCifrado
+              password: values.password
             });
             alert("¡Contraseña restablecida exitosamente! Redirigiendo al inicio de sesión...");
             setTimeout(() => navigate('/login'), 2000); // Redirigir después de 2 segundos
