@@ -43,7 +43,7 @@ const Login = () => {
         onSubmit={async (values, { setSubmitting, setErrors }) => {
           try {
             
-            const response = await axios.post('https://servertest-tnt7.onrender.com/api/users/login', {
+            const response = await axios.post('https://servertest-tnt7.onrender.com/api/users/login/', {
               email: values.email,
               password: values.password,
             }, { 
