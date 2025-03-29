@@ -50,14 +50,12 @@ const Register = () => {
         initialValues={{ firstName: '', email: '', password: '', phone: '' }}
         validationSchema={registerValidationSchema}
         onSubmit={async (values, { setSubmitting, setErrors }) => {
-          const emailCifrado = caesarCipher(values.email, 3);
-          const passwordCifrado = caesarCipher(values.password, 3);
 
           try {
             const response = await axios.post('https://servertest-tnt7.onrender.com/api/users/registro', {
               nombre: values.firstName,
-              email: emailCifrado,
-              password: passwordCifrado,
+              email: values.email,
+              password: values.password,
               telefono: values.phone,
             }, { 
               headers: {
