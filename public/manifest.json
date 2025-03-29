@@ -1,25 +1,28 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "SH",
+  "name": "SafeHelmet",
+  "description": "Página web informativa sobre SafeHelmet, un sistema de seguridad para ciclistas que integra un casco inteligente con seguimiento en tiempo real y alertas de emergencia.",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
-    },
-    {
-      "src": "logo192.png",
+      "src": "/icons/192.png",
       "type": "image/png",
       "sizes": "192x192"
-    },
-    {
-      "src": "logo512.png",
-      "type": "image/png",
-      "sizes": "512x512"
     }
   ],
-  "start_url": ".",
+  "screenshots": [
+    {
+      "src": "/icons/cap1.png",
+      "sizes": "1863x945",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
+
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "theme_color": "#000000",
+  "display_override": ["fullscreen", "minimal-ui"],
+  "theme_color": "#FF6D00",
   "background_color": "#ffffff"
+  
 }

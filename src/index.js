@@ -6,6 +6,34 @@ import reportWebVitals from './reportWebVitals';
 import { UserProvider } from './userContext'; // Importa el proveedor de usuario
 
 
+
+
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/service-worker.js")
+      .then((registration) => {
+        console.log("Service Worker registrado:", registration);
+
+        registration.onupdatefound = () => {
+          const newWorker = registration.installing;
+          newWorker.onstatechange = () => {
+            if (newWorker.state === "installed") {
+              if (navigator.serviceWorker.controller) {
+                console.log("Nueva versión disponible. Recargando...");
+                newWorker.postMessage("SKIP_WAITING");
+                window.location.reload();
+              }
+            }
+          };
+        };
+      })
+      .catch((error) => console.error("Error al registrar Service Worker:", error));
+  });
+}
+
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
