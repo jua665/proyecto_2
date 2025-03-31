@@ -167,7 +167,7 @@ const Inicio = () => {
       <Encabezado/>
       <BenefitsSection />
       <ImageCarousel />
-      <CyclingStats/>
+      <CyclingStats />
       <Comentarios />
       <br/>
       <br/>

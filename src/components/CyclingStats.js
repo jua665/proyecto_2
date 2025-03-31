@@ -16,25 +16,35 @@ const CyclingStats = () => {
   const { user } = useUser();
   const [data, setData] = useState([]);
 
+  
+
   useEffect(() => {
     if (!user || !user._id) {
       console.error("No se proporcionó un userId válido");
       return;
     }
-
+ 
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/routes/user/${user._id}`);
-
+        const response = await axios.get(`https://servertest-tnt7.onrender.com/api/routes/user/${user._id}`);
+        
+        const processedData = response.data
+        .filter(route => route.status === "Completed")  // Filtra solo las rutas activas
+        .map(route => ({
+          day: new Date(route.createdAt).toLocaleDateString("es-ES", { weekday: "long" }),
+          distancia: route.distance,
+        }));
+        /*
         // Filtrar rutas completadas y procesar datos
         const processedData = response.data
-          .filter((route) => route.status === "Completed") // Solo rutas finalizadas
-          .map((route) => ({
+        console.log("sisi",processedData)
+          .filter(route => route.status === "Completed") // Solo rutas finalizadas
+          .map(route => ({
             day: new Date(route.createdAt).toLocaleDateString("es-ES", {
               weekday: "long",
             }), // Día de la semana
             distancia: route.distance, // Distancia recorrida
-          }));
+          }));*/
 
         // Agrupar por día y sumar las distancias
         const groupedData = processedData.reduce((acc, curr) => {
@@ -58,7 +68,7 @@ const CyclingStats = () => {
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Rutas Finalizadas por Día de la Semana</h2>
+      <h2 style={styles.title}>Ruta Finalizadas por Día de la Semana</h2>
 
       <ResponsiveContainer width="100%" height={400}>
         <BarChart
