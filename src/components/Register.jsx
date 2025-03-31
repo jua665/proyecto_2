@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
@@ -27,6 +28,19 @@ const registerValidationSchema = yup.object().shape({
 
 const Register = () => {
   const navigate = useNavigate();
+  const [isOnline, setIsOnline] = useState(navigator.onLine);
+
+
+  useEffect(() => {
+    window.addEventListener("online", () => setIsOnline(true));
+    window.addEventListener("offline", () => setIsOnline(false));
+
+    return () => {
+      window.removeEventListener("online", () => setIsOnline(true));
+      window.removeEventListener("offline", () => setIsOnline(false));
+    };
+  }, []);
+
 
   const handleKeyPress = (event) => {
     const charCode = event.which ? event.which : event.keyCode;
@@ -35,12 +49,76 @@ const Register = () => {
     }
   };
 
+  
+  function InsertIndexedDB(data) {
+    let dbRequest = window.indexedDB.open("database");
+    dbRequest.onupgradeneeded = event => {
+      let db = event.target.result;
+      if (!db.objectStoreNames.contains("Usuarios")) {
+        db.createObjectStore("Usuarios", { keyPath: "email" });
+      }
+    };
+
+    dbRequest.onsuccess = event => {
+        let db = event.target.result;
+
+            // Verificamos que el object store exista antes de hacer la transacción
+        if (!db.objectStoreNames.contains("Usuarios")) {
+          console.error("❌ El object store 'Usuarios' no existe.");
+          return;
+        }
+
+        let transaction = db.transaction("Usuarios", "readwrite");
+        let objStore = transaction.objectStore("Usuarios");
+
+        let addRequest = objStore.add(data);
+
+        addRequest.onsuccess = event2 => {
+            console.log("Datos insertados en IndexedDB:", event2.target.result);
+
+            if ('serviceWorker' in navigator && 'SyncManager' in window) {
+                navigator.serviceWorker.ready
+                    .then(registration => {
+                        console.log("Intentando registrar la sincronización...");
+                        return registration.sync.register("syncUsuarios");
+                    })
+                    .then(() => { 
+                        console.log("✅ Sincronización registrada con éxito");
+                    })
+                    .catch(err => {
+                        console.error("❌ Error registrando la sincronización:", err);
+                    });
+            } else {
+                console.warn("⚠️ Background Sync no es soportado en este navegador.");
+            }
+        };
+
+        addRequest.onerror = () => {
+            console.error("❌ Error insertando en IndexedDB");
+        };
+    };
+
+    dbRequest.onerror = () => {
+        console.error("❌ Error abriendo IndexedDB");
+    };
+}
+
   return (
     <div style={styles.container}>
       <Formik
         initialValues={{ firstName: '', email: '', password: '', phone: '' }}
         validationSchema={registerValidationSchema}
         onSubmit={async (values, { setSubmitting, setErrors }) => {
+          
+            const userData = { email: values.email, nombre:values.firstName, password: values.password,telefono: values.phone };
+
+          
+            if (!isOnline) {
+              console.warn("⚠️ No hay conexión. Guardando en IndexedDB...");
+              InsertIndexedDB(userData);
+              alert("Registro guardado offline. Se enviará cuando haya internet.");
+              return;
+          }
 
           try {
             const response = await axios.post('https://servertest-tnt7.onrender.com/api/users/registro', {

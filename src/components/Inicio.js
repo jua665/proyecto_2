@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Header2 from '../components/Header2';
 import logo1 from '../imgs/codigo.png';
@@ -16,6 +16,8 @@ import { useUser } from '../userContext';
 import CyclingStats from './CyclingStats'; // Importa el nuevo componente
 import UserTable from './UserTable';
 import ImageCarousel from './ImageCarousel'
+import keys from "../components/keys.json"; // Importa las llaves VAPID
+
 
 const MainContainer = styled.main`
   display: flex;
@@ -92,6 +94,8 @@ const BenefitText = styled.div`
   flex: 1;
 `;
 
+
+
 const BenefitsSection = () => {
   const benefits = [
     { icon: logo1, title: 'Lenguaje', text: 'El lenguaje de programación para el desarrollo de Safe Helmet es JavaScript, utilizando React Native/React como framework; y el gestor de bases de datos MongoDB.' },
@@ -135,6 +139,53 @@ const BackupButton = styled.button`
 
 const Inicio = () => {
   const { user } = useUser();
+
+  const registerServiceWorker = async () => {
+    try {
+      const registro = await navigator.serviceWorker.register('/service-worker.js', { type: 'module' });
+      if (Notification.permission === 'denied' || Notification.permission === 'default') {
+        const permission = await Notification.requestPermission();
+        if (permission === 'granted') {
+          // ✅ Verificar si ya existe una suscripción
+          const existingSubscription = await registro.pushManager.getSubscription();
+  
+          if (!existingSubscription) {
+            console.log("No hay suscripción, creando una nueva...");
+            // Si no existe suscripción, se crea una nueva
+            const subscription = await registro.pushManager.subscribe({
+              userVisibleOnly: true,
+              applicationServerKey: keys.publicKey
+            });
+  
+            const json = subscription.toJSON();
+            console.log(json);
+            // Enviar suscripción a la base de datos
+            const response = await fetch('https://servertest-tnt7.onrender.com/api/users/suscripcion', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ userId:user._id, suscripcion: json })
+            });
+  
+            if (!response.ok) {
+              throw new Error(`Error en la solicitud: ${response.status}`);
+            }
+  
+            const data = await response.json();
+            console.log('Información guardada en la BD', data);
+          } else {
+            console.log('El usuario ya está suscrito, no se crea una nueva.');
+          }
+        }
+      }
+    } catch (error) {
+      console.error("Error al registrar el Service Worker:", error);
+    }
+  };
+  
+  // Llamamos a la función de suscripción solo una vez, al montar el componente
+  useEffect(() => {
+    registerServiceWorker();
+  }, []);
 
   const handleBackup = async () => {
     try {

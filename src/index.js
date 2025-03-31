@@ -7,7 +7,7 @@ import { UserProvider } from './userContext'; // Importa el proveedor de usuario
 
 
 
-
+/*
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
@@ -30,7 +30,23 @@ if ("serviceWorker" in navigator) {
       })
       .catch((error) => console.error("Error al registrar Service Worker:", error));
   });
-}
+}*/
+
+navigator.serviceWorker.register('/service-worker.js', { type: 'module' })
+   .then((registro) => {
+     //console.log("Service Worker registrado correctamente:", registro);
+   })
+ .catch(error => console.error("Error al registrar el Service Worker:", error));
+
+
+ // Configuración de IndexedDB
+let db = window.indexedDB.open("database");
+
+db.onupgradeneeded = (event) => {
+  let result = event.target.result;
+  result.createObjectStore("Usuarios", { autoIncrement: true });
+};
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
