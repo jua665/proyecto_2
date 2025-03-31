@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+/*import React, { useEffect, useRef, useState } from "react";
 import "./css/map.css"; // Importa el archivo CSS para los estilos
 
 const MapComponent = () => {
@@ -95,4 +95,4 @@ const MapComponent = () => {
   );
 };
 
-export default MapComponent;
+export default MapComponent;*/

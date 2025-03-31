@@ -2,108 +2,123 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import logo from '../imgs/safenuevo.png';
-import PayPalButton from './PayPalButton'; // Importa el botón de PayPal
+import PayPalButton from './PayPalButton';
 
 // Estilos
 const HeaderContainer = styled.header`
-display: flex;
-align-items: center;
-padding: 13px 100px;
-background:rgb(255, 255, 255); /* Cambia este color */
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-position: fixed;
-top: 0;
-left: 0;
-right: 0;
-z-index: 1000;
-justify-content: space-between;
+  display: flex;
+  align-items: center;
+  padding: 13px 100px;
+  background: rgb(255, 255, 255);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  justify-content: space-between;
+  
+  @media (max-width: 768px) {
+    padding: 13px 20px;
+  }
 `;
 
 const Logo = styled.img`
-height: 45px;
-width: auto;
+  height: 45px;
+  width: auto;
+`;
+
+const NavWrapper = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  
+  @media (max-width: 768px) {
+    justify-content: flex-start;
+  }
 `;
 
 const Nav = styled.nav`
-display: flex;
-gap: 30px;
+  display: flex;
+  gap: 30px;
+  justify-content: center;
 
-@media (max-width: 768px) {
-  display: ${({ open }) => (open ? 'flex' : 'none')};
-  flex-direction: column;
-  position: absolute;
-  top: 70px;
-  left: 0;
-  right: 0;
-  background: #fff;
-  padding: 20px;
-}
+  @media (max-width: 768px) {
+    display: ${({ open }) => (open ? 'flex' : 'none')};
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: #fff;
+    padding: 20px;
+    align-items: flex-start;
+  }
 `;
 
 const NavLink = styled(Link)`
-text-decoration: none;
-color: #000;
-font-weight: bold;
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
 
-&:hover {
-  color: #FF5722;
-}
+  &:hover {
+    color: #FF5722;
+  }
 
-&.active {
-  color: #FF5722;
-}
+  &.active {
+    color: #FF5722;
+  }
 `;
 
 const ButtonLink = styled(Link)`
-display: flex;
-justify-content: center;
-align-items: center;
-padding: 8px 16px; /* Ajusta el relleno para que los botones sean más compactos */
-min-width: 100px; /* Define un ancho mínimo menor */
-max-width: 150px; /* Define un ancho máximo para evitar que crezcan demasiado */
-border-radius: 12px; /* Ajusta las esquinas redondeadas si lo deseas */
-border: 2px solid #fff;
-background-color: #000;
-color: rgb(255, 255, 255) !important;
-text-transform: none;
-font-size: 0.9em; /* Reduce un poco el tamaño del texto */
-transition: background-color 0.3s ease, color 0.3s ease;
-text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  min-width: 100px;
+  max-width: 150px;
+  border-radius: 12px;
+  border: 2px solid #fff;
+  background-color: #000;
+  color: rgb(255, 255, 255) !important;
+  text-transform: none;
+  font-size: 0.9em;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  text-decoration: none;
 
-&:hover {
-  background-color: #FF5722;
-  color: white !important;
-}
+  &:hover {
+    background-color: #FF5722;
+    color: white !important;
+  }
 `;
 
 const ButtonContainer = styled.div`
-display: flex;
-gap: 10px; /* Reduce el espacio entre los botones */
-margin-left: 20px;
-
-@media (max-width: 768px) {
-  flex-direction: column;
-  gap: 8px; /* Reduce el espacio en pantallas pequeñas */
-  margin-top: 10px;
-  margin-left: 0;
-}
+  display: flex;
+  gap: 10px;
+  
+  @media (max-width: 768px) {
+    display: ${({ menuOpen }) => (menuOpen ? 'none' : 'flex')}; /* Oculta en móvil cuando el menú está abierto */
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 15px;
+  }
 `;
 
 
 const MenuButton = styled.button`
-background: none;
-border: none;
-cursor: pointer;
-display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: none;
 
-@media (max-width: 768px) {
-  display: block;
-}
+  @media (max-width: 768px) {
+    display: block;
+  }
 
-svg {
-  width: 30px;
-  height: 30px;
-}
+  svg {
+    width: 30px;
+    height: 30px;
+  }
 `;
 
 const Modal = styled.div`
@@ -144,25 +159,23 @@ const ModalButton = styled.button`
   }
 `;
 
-// Nuevo estilo para el mensaje de bienvenida
 const WelcomeMessage = styled.div`
   background-color: #e0f7fa;
   color: #00796b;
-  padding: 20px; /* Aumenta el padding para mayor tamaño */
+  padding: 20px;
   text-align: center;
   position: fixed;
-  top: 60px; /* Ajusta según la altura de tu barra de navegación */
+  top: 60px;
   width: 100%;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-  z-index: 999; /* Asegúrate de que esté debajo del header */
+  z-index: 999;
 `;
 
-// Cambia la duración del mensaje de bienvenida aquí
 const Header2 = () => {
   const [activeSection, setActiveSection] = useState('');
   const [menuOpen, setMenuOpen] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [showModalPayPal, setShowModalPayPal] = useState(false); // Nuevo estado para PayPal modal
+  const [showModalPayPal, setShowModalPayPal] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [showWelcome, setShowWelcome] = useState(true);
 
@@ -196,7 +209,7 @@ const Header2 = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowWelcome(false);
-    }, 5000); // El mensaje estará visible por 5 segundos
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -238,14 +251,14 @@ const Header2 = () => {
   };
 
   const handlePayPalClick = () => {
-    setShowModalPayPal(true); // Abrir modal de PayPal
+    setShowModalPayPal(true);
   };
 
   const handleConfirmLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userEmail');
     setShowModal(false);
-    navigate('/'); // Redirigir a la página de inicio
+    navigate('/');
   };
 
   const handleCancelLogout = () => {
@@ -253,28 +266,43 @@ const Header2 = () => {
   };
 
   const handleClosePayPalModal = () => {
-    setShowModalPayPal(false); // Cerrar modal de PayPal
+    setShowModalPayPal(false);
   };
 
   return (
     <>
       <HeaderContainer>
         <Logo src={logo} alt="SafeHelmet Logo" />
+        
+        <NavWrapper>
+          <Nav open={menuOpen}>
+            <NavLink onClick={handleInicioClick} className={activeSection === 'inicio' ? 'active' : ''}>Inicio</NavLink>
+            <NavLink onClick={handleBenefitsClick} className={activeSection === 'benefits' ? 'active' : ''}>Informacion</NavLink>
+            <NavLink onClick={handleCarouselClick} className={activeSection === 'carousel' ? 'active' : ''}>Carrusel</NavLink>
+            <NavLink onClick={handleComentariotClick} className={activeSection === 'comentario' ? 'active' : ''}>Comentarios</NavLink>
+            
+            {/* Botones solo visibles en mobile dentro del menú desplegable */}
+            {menuOpen && (
+              <ButtonContainer>
+                <ButtonLink onClick={handleLogoutClick}>Cerrar sesión</ButtonLink>
+                <ButtonLink onClick={handlePayPalClick}>Donaciones</ButtonLink>
+              </ButtonContainer>
+            )}
+          </Nav>
+        </NavWrapper>
+        
+        {/* Botones visibles en desktop */}
+        <ButtonContainer menuOpen={menuOpen}>
+  <ButtonLink onClick={handleLogoutClick}>Cerrar sesión</ButtonLink>
+  <ButtonLink onClick={handlePayPalClick}>Donaciones</ButtonLink>
+</ButtonContainer>
+
+        
         <MenuButton onClick={() => setMenuOpen(!menuOpen)}>
           <svg viewBox="0 0 24 24">
             <path fill="currentColor" d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
           </svg>
         </MenuButton>
-        <Nav open={menuOpen}>
-          <NavLink onClick={handleInicioClick} className={activeSection === 'inicio' ? 'active' : ''}>Inicio</NavLink>
-          <NavLink onClick={handleBenefitsClick} className={activeSection === 'benefits' ? 'active' : ''}>Informacion</NavLink>
-          <NavLink onClick={handleCarouselClick} className={activeSection === 'carousel' ? 'active' : ''}>Carrusel</NavLink>
-          <NavLink onClick={handleComentariotClick} className={activeSection === 'comentario' ? 'active' : ''}>Comentarios</NavLink>
-        </Nav>
-        <ButtonContainer>
-          <ButtonLink onClick={handleLogoutClick}>Cerrar sesión</ButtonLink>
-          <ButtonLink onClick={handlePayPalClick}>Donaciones</ButtonLink> 
-        </ButtonContainer>
       </HeaderContainer>
 
       {showWelcome && <WelcomeMessage>¡Bienvenido a nuestro sitio web!</WelcomeMessage>}
@@ -288,10 +316,9 @@ const Header2 = () => {
         </div>
       </Modal>
 
-      {/* Modal para PayPal */}
       <Modal show={showModalPayPal}>
         <ModalTitle>Proceso de pago con PayPal</ModalTitle>
-        <PayPalButton /> {/* Aquí integras tu botón de PayPal */}
+        <PayPalButton />
         <ModalButton onClick={handleClosePayPalModal}>Cerrar</ModalButton>
       </Modal>
     </>
