@@ -121,8 +121,8 @@ self.addEventListener("push", (event) => {
 
   let options={
       body:event.data.text(),
-      icon:"/icon.png",
-      Image:"/icon.png",
+      icon:"/icons/192.png",
+      Image:"/icons/192.png",
   }
   
   self.registration.showNotification("Titulo",options); 
