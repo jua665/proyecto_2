@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Pagination from './Pagination';
 import '../components/css/UserTable.css';
-
+ 
 const UserTable = () => {
   const [users, setUsers] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);

@@ -285,7 +285,6 @@ const Header2 = () => {
             {menuOpen && (
               <ButtonContainer>
                 <ButtonLink onClick={handleLogoutClick}>Cerrar sesión</ButtonLink>
-                <ButtonLink onClick={handlePayPalClick}>Donaciones</ButtonLink>
               </ButtonContainer>
             )}
           </Nav>
@@ -294,7 +293,6 @@ const Header2 = () => {
         {/* Botones visibles en desktop */}
         <ButtonContainer menuOpen={menuOpen}>
   <ButtonLink onClick={handleLogoutClick}>Cerrar sesión</ButtonLink>
-  <ButtonLink onClick={handlePayPalClick}>Donaciones</ButtonLink>
 </ButtonContainer>
 
         
